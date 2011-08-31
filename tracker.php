@@ -32,7 +32,7 @@ if($shm_id !== false){
 
 
 
-# Loop: reopen area read-only
+# Loop: reopen area read-only and loop through the slots
 
 $shm_id = shmop_open(SHM_IDENTIFIER, "a", 0644, MAX_MESSAGE*MESSAGE_SIZE);
 
@@ -40,12 +40,8 @@ if($shm_id !== false){
 
   while(true){
     for($i = 1; $i <= MAX_MESSAGE; $i++) {
-//       var_dump('start: '.(($i-1)*MESSAGE_SIZE));
-//       var_dump(MESSAGE_SIZE);
       $message = shmop_read($shm_id, ($i-1)*MESSAGE_SIZE, MESSAGE_SIZE);
       if($message != EMPTY_MESSAGE) {
-//         var_dump($message);
-//         var_dump(EMPTY_MESSAGE);
         $replacements = array($i, escapeshellarg($message));
         $command = str_replace($placeholders,$replacements, COMMAND_STRING);
 
