@@ -13,8 +13,9 @@ declare(ticks = 1); #necessary to catch ctrl-c
 pcntl_signal(SIGTERM, 'sigintShutdown');
 pcntl_signal(SIGINT,  'sigintShutdown');
 
-define('COMMAND_STRING', 'dcled -p %PRE% %MESSAGE% ');
+define('COMMAND_STRING', 'echo %MESSAGE% | dcled -p %PRE%  ');
 $placeholders = array('%PRE%', '%MESSAGE%');
+define('INTERVAL',5);
 
 
 # Init: create a shared memory place and write an empty message into each of the MAX_MESSAGE slots
@@ -44,9 +45,9 @@ if($shm_id !== false){
       if($message != EMPTY_MESSAGE) {
         $replacements = array($i, escapeshellarg($message));
         $command = str_replace($placeholders,$replacements, COMMAND_STRING);
-
-        echo $command."\n";
-        sleep(1);
+        system($command);
+        #echo $command."\n";
+        sleep(INTERVAL);
       }
     }
   }
