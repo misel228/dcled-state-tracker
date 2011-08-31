@@ -29,7 +29,7 @@ if($shm_id !== false) {
   #first write "empty message" to clear the old message, then write new message
   $address = ($slot-1)*MESSAGE_SIZE;
   $shm_bytes_written = shmop_write($shm_id, EMPTY_MESSAGE, $address );
-  if($message != '<clear>') $shm_bytes_written = shmop_write($shm_id, $message, $address );
+  $shm_bytes_written = shmop_write($shm_id, $message, $address );
   shmop_close($shm_id);
 }
 

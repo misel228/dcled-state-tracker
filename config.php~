@@ -9,6 +9,6 @@ define('MAX_MESSAGE', 8);
 //max number of chars per message
 define('MESSAGE_SIZE',128);
 //key for the shared memory
-define("SHM_IDENTIFIER", 0x2222);
+define("SHM_IDENTIFIER", ftok('/tmp/shm_test', 'R'));
 //empty message (ie. string with only \0)
 define('EMPTY_MESSAGE', str_pad("\0", MESSAGE_SIZE, "\0"));
