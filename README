@@ -22,9 +22,9 @@ version from SVN.)
 The state tracker consists of two parts. One program acts as a demon and
 continously displays messages that it receives from a client script.
 
-To use it just start "php tracker.php" and let it run (e.g. in a virtual
+To use it just start "dcledd" and let it run (e.g. in a virtual
 terminal with "screen").
 
-The send the messages with "php client <slot> <message>" where <slot> is a
+The send the messages with "dcledc <slot> <message>" where <slot> is a
 number from 1 to 8 and determines the preamble shown for this message.
 
