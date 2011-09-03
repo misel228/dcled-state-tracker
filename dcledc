@@ -23,7 +23,7 @@ $message = substr($argv[2],0, (MESSAGE_SIZE-TIME_STAMP_SIZE));
 
 
 # Init: Open shared memory for writing
-$shm_id = shmop_open(SHM_IDENTIFIER, "w", 0644, MAX_MESSAGE*MESSAGE_SIZE);
+$shm_id = shmop_open(SHM_IDENTIFIER, "w", 0666, MAX_MESSAGE*MESSAGE_SIZE);
 
 if($shm_id !== false) {
   #write the message into memory

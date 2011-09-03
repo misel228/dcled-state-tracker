@@ -20,7 +20,7 @@ define('INTERVAL',1);
 
 # Init: create a shared memory place and write an empty message into each of the MAX_MESSAGE slots
 
-$shm_id = shmop_open(SHM_IDENTIFIER, "c", 0644, MAX_MESSAGE*MESSAGE_SIZE);
+$shm_id = shmop_open(SHM_IDENTIFIER, "c", 0666, MAX_MESSAGE*MESSAGE_SIZE);
 if($shm_id !== false){
   for($i=1;$i<=MAX_MESSAGE;$i++) {
     $shm_bytes_written = shmop_write($shm_id, EMPTY_MESSAGE, ($i-1)*MESSAGE_SIZE);
@@ -35,7 +35,7 @@ if($shm_id !== false){
 
 # Loop: reopen area read-only and loop through the slots
 
-$shm_id = shmop_open(SHM_IDENTIFIER, "a", 0644, MAX_MESSAGE*MESSAGE_SIZE);
+$shm_id = shmop_open(SHM_IDENTIFIER, "a", 0666, MAX_MESSAGE*MESSAGE_SIZE);
 
 if($shm_id !== false){
 
