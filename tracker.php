@@ -1,7 +1,7 @@
 #!/usr/bin/php -q
 <?php
 /*
- * DCLed - state tracker
+ * DCLED - state tracker
  * repeatedly calls dcled to display what's in the memory
  * 
  */
@@ -15,7 +15,7 @@ pcntl_signal(SIGINT,  'sigintShutdown');
 
 define('COMMAND_STRING', 'echo %MESSAGE% | dcled -p %PRE%  ');
 $placeholders = array('%PRE%', '%MESSAGE%');
-define('INTERVAL',5);
+define('INTERVAL',1);
 
 
 # Init: create a shared memory place and write an empty message into each of the MAX_MESSAGE slots
@@ -43,11 +43,14 @@ if($shm_id !== false){
     for($i = 1; $i <= MAX_MESSAGE; $i++) {
       $message = shmop_read($shm_id, ($i-1)*MESSAGE_SIZE, MESSAGE_SIZE);
       if($message != EMPTY_MESSAGE) {
-        $replacements = array($i, escapeshellarg($message));
-        $command = str_replace($placeholders,$replacements, COMMAND_STRING);
-        system($command);
-        #echo $command."\n";
-        sleep(INTERVAL);
+        $time_stamp = substr($message,0,TIME_STAMP_SIZE);
+        if((time()-MAX_TIME) < $time_stamp ) {
+          $replacements = array($i, escapeshellarg(substr($message,TIME_STAMP_SIZE,MESSAGE_SIZE-TIME_STAMP_SIZE)));
+          $command = str_replace($placeholders,$replacements, COMMAND_STRING);
+          system($command);
+          #echo $command."\n";
+          sleep(INTERVAL);
+        }
       }
     }
   }

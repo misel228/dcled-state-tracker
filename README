@@ -1,0 +1,30 @@
+DCLED State Tracker
+
+Author: Stefan Misch
+URL:    https://github.com/misel228/dcled-state-tracker
+
+Released under the GPL
+
+DCLED stands for Dream Cheeky LED
+
+It's a small LED matrix display that can be connected to your computer via USB.
+
+Jeff Jahr wrote a program for Linux to send message to this display. His code
+can be found here and is actually necessary for this project:
+http://www.last-outpost.com/~malakai/dcled/
+
+Follow the make instructions and copy the binary to /usr/local/bin or someplace
+else in your $PATH. Please note: libhid is not distributed with Debian or Ubuntu
+anymore so you need to install that separately as well. You can get it here:
+http://libhid.alioth.debian.org/ (As of September 2011 it still works with the
+version from SVN.)
+
+The state tracker consists of two parts. One program acts as a demon and
+continously displays messages that it receives from a client script.
+
+To use it just start "php tracker.php" and let it run (e.g. in a virtual
+terminal with "screen").
+
+The send the messages with "php client <slot> <message>" where <slot> is a
+number from 1 to 8 and determines the preamble shown for this message.
+

@@ -2,8 +2,9 @@
 <?php
 /*
  * DCLed - state tracker client
- * Takes slot and message as command line argument and writes it in the memory for the tracker to display (TODO)
+ * Takes slot and message as command line argument and writes it in the memory for the tracker to display
  *
+ * see: https://github.com/misel228/dcled-state-tracker
  */
 
 require 'config.php';
@@ -18,7 +19,7 @@ if(!isset($argv[1]) || !isset($argv[2]) || !is_numeric($argv[1])) {
 }
 
 $slot    = $argv[1];
-$message = $argv[2];
+$message = substr($argv[2],0, (MESSAGE_SIZE-TIME_STAMP_SIZE));
 
 
 # Init: Open shared memory for writing
@@ -29,7 +30,8 @@ if($shm_id !== false) {
   #first write "empty message" to clear the old message, then write new message
   $address = ($slot-1)*MESSAGE_SIZE;
   $shm_bytes_written = shmop_write($shm_id, EMPTY_MESSAGE, $address );
-  if($message != '<clear>') $shm_bytes_written = shmop_write($shm_id, $message, $address );
+  $time_stamp = str_pad(time(),TIME_STAMP_SIZE, "0", STR_PAD_LEFT);
+  if($message != '<clear>') $shm_bytes_written = shmop_write($shm_id, $time_stamp.$message, $address );
   shmop_close($shm_id);
 }
 
@@ -37,6 +39,6 @@ function print_help_message() {
   $msg  = "DCLed - state tracker client.\n";
   $msg .= "Usage:\t\t client.php n message\n";
   $msg .= "n:\t\t 1 to 8 - slot which the message is put in\n";
-  $msg .= "message:\t a 128 character string to be displayed\n";
+  $msg .= "message:\t a 118 character string to be displayed\n";
   echo $msg;
 }
