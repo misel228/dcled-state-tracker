@@ -3,7 +3,7 @@
 /*
  * DCLED - state tracker
  * repeatedly calls dcled to display what's in the memory
- * 
+ * see: https://github.com/misel228/dcled-state-tracker
  */
 
 require 'config.php';
